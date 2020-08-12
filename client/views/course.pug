@@ -1,0 +1,10 @@
+extends layout
+
+block content
+  .course
+    if course
+      h1= course.title
+      img(src=course.img alt=course.title)
+      p.price.big= course.price
+    else
+      pre= course

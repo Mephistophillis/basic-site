@@ -1,0 +1,21 @@
+extends layout
+
+block content
+  h1= title
+  each course, idx in courses
+    .row
+      .col.s6.offset-s3
+        .card
+          .card-image
+            img(src=course.img)
+          .card-content
+            span.card-title= course.title
+            p.price= course.price
+          .card-action.actions
+            a(href='/courses/' + course.id) View course
+            a(href='/courses/' + course.id + '/edit?allow=true') Edit
+            form(action='/cart/add' method='POST')
+              input(type='hidden' name='id' value=course.id)
+              button.btn.btn-primary(type='submit') Add 
+  else 
+    p No courses found.

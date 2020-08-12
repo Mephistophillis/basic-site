@@ -1,0 +1,24 @@
+extends layout
+
+block content
+  h1 Edit #{course.title}
+  form(action='/courses/edit' method='POST')
+    
+    .input-field
+      input#title.validate(placeholder='Title' name='title' type='text' required value=course.title)
+      label(for='title') Title
+      span(class='helper-text' data-error='Type title')
+    
+    .input-field
+      input#price.validate(placeholder='Price' name='price' type='number' min='1' required value=course.price)
+      label(for='price') Course price
+      span(class='helper-text' data-error='Type price')
+    
+    .input-field
+      input#img.validate(placeholder='Image' name='img' type='text' required value=course.img)
+      label(for='img') Course image
+      span(class='helper-text' data-error='Add image URL')
+        
+    input(type='hidden' name='id' value=course.id)
+      
+    button.btn.btn-primary Edit

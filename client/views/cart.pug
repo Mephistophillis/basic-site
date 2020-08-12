@@ -1,0 +1,26 @@
+extends layout
+
+block content
+  h1= title
+  .cart
+    if courses.length 
+      table
+        thead
+          tr
+            th Title
+            th Count
+            th Action
+        tbody
+          each course in courses
+            tr
+              td=course.title
+              td=course.count
+              td
+                button.btn.btn-small.js-remove(data-id=course.id) Delete
+        
+      p
+        strong Price: 
+        span.price=price
+    else
+      p Cart is Empty
+  

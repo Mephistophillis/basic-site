@@ -1,0 +1,22 @@
+extends layout
+
+block content
+  h1= title
+  form(action='/add' method='POST')
+    
+    .input-field
+      input#title.validate(placeholder='Title' name='title' type='text' required)
+      label(for='title') Title
+      span(class='helper-text' data-error='Type title')
+    
+    .input-field
+      input#price.validate(placeholder='Price' name='price' type='number' min='1' required)
+      label(for='price') Course price
+      span(class='helper-text' data-error='Type price')
+    
+    .input-field
+      input#img.validate(placeholder='Image' name='img' type='text' required)
+      label(for='img') Course image
+      span(class='helper-text' data-error='Add image URL')
+      
+    button.btn.btn-primary Add course
