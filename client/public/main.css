@@ -17,6 +17,10 @@
   align-items: center;
 }
 
+.course-form {
+  margin-bottom: 2rem;
+}
+
 .course h1 {
   margin-bottom: 2rem;
 }
@@ -33,4 +37,8 @@
   -ms-align-items: center;
   align-items: center;
   justify-content: space-between;
+}
+
+.auth {
+  padding-top: 1rem;
 }

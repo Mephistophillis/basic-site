@@ -1,22 +1,32 @@
 const { Router } = require("express");
 const Course = require("../models/course");
 
+const auth = require("../middleware/auth");
 const router = Router();
 
-router.get("/", (req, res) => {
+router.get("/", auth, (req, res) => {
   res.render("add", {
     title: "Add courses page",
     isAdd: true
   });
 });
 
-router.post("/", async (req, res) => {
+router.post("/", auth, async (req, res) => {
   const { title, price, img } = req.body;
-  const course = new Course(title, price, img);
 
-  await course.save();
+  const course = new Course({
+    title,
+    price,
+    img,
+    userId: req.user
+  });
 
-  res.redirect("/courses");
+  try {
+    await course.save();
+    res.redirect("/courses");
+  } catch (err) {
+    console.log(err);
+  }
 });
 
 module.exports = router;

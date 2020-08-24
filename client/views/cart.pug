@@ -21,6 +21,9 @@ block content
       p
         strong Price: 
         span.price=price
+        
+      form(action='/orders' method='POST')
+        button.btn(type='submit') Buy
     else
       p Cart is Empty
   

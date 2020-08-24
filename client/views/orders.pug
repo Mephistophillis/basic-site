@@ -1,0 +1,29 @@
+extends layout
+
+block content
+  h1 My orders
+  if orders.length
+    each order in orders    
+      .row
+        .col.s6.offset-s3
+          .card
+            .card-content
+              span.card-title Заказ 
+                small=order._id
+              p.date #{order.date} 
+              p
+                em=order.user.userId.name 
+                |  (#{order.user.userId.email})
+                
+              ol
+                each course in order.courses
+                  li=course.course.title + " x" + course.count
+                    p=course.course.price
+                  
+                
+              hr
+                
+              p Price: 
+                span.price=order.price
+  else 
+    p Orders not found

@@ -1,0 +1,53 @@
+extends ../layout
+
+block content
+  .auth
+    .row
+      .col.s12
+        ul.tabs
+          li.tab.col.s6
+            a.active(href='#login') Log In
+          li.tab.col.s6 
+            a(href='#register') Sign Up
+      #login.col.s6.offset-s3 
+        h1 Log In
+        form(action='/auth/login' method='POST')
+          
+          .input-field
+            input#email.validate(placeholder='Email' name='email' type='text' required)
+            label(for='email') Email
+            span(class='helper-text' data-error='Type email')
+          
+          .input-field
+            input#password.validate(placeholder='password' name='password' type='password' required)
+            label(for='password') Password
+            span(class='helper-text' data-error='Type password')
+            
+          button.btn.btn-primary(type='submit') Log In
+          
+      #register.col.s6.offset-s3
+        h1 Sign Up
+        form(action='/auth/register' method='POST')
+          
+          .input-field
+            input#r-name.validate(placeholder='Name' name='name' type='text' required)
+            label(for='r-name') Name
+            span(class='helper-text' data-error='Type your name')
+          
+          .input-field
+            input#r-email.validate(placeholder='Email' name='email' type='text' required)
+            label(for='r-email') Email
+            span(class='helper-text' data-error='Type email')
+          
+          .input-field
+            input#r-password.validate(placeholder='password' name='password' type='password' required)
+            label(for='r-password') Password
+            span(class='helper-text' data-error='Type password')
+          
+          .input-field
+            input#confirm.validate(placeholder='password' name='confirm' type='password' required)
+            label(for='confirm') Confirm
+            span(class='helper-text' data-error='Type password')
+            
+          button.btn.btn-primary(type='submit') Sign Up
+    

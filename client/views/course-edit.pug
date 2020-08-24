@@ -2,7 +2,7 @@ extends layout
 
 block content
   h1 Edit #{course.title}
-  form(action='/courses/edit' method='POST')
+  form.course-form(action='/courses/edit' method='POST')
     
     .input-field
       input#title.validate(placeholder='Title' name='title' type='text' required value=course.title)
@@ -22,3 +22,7 @@ block content
     input(type='hidden' name='id' value=course.id)
       
     button.btn.btn-primary Edit
+  
+  form(action='/courses/remove' method='POST')
+    input(type='hidden' name='id' value=course.id)
+    button.btn.red() Delete
