@@ -2,6 +2,8 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const path = require("path");
+const csrf = require("csurf");
+const flash = require("connect-flash");
 
 const session = require("express-session");
 const MongoStore = require("connect-mongodb-session")(session);
@@ -10,6 +12,7 @@ const app = express();
 
 const PORT = process.env.PORT || 3000;
 const MONGO_URI = process.env.MONGO_URI || "mongodb://localhost:27017/db";
+const SECRET_KEY = process.env.SECRET_KEY || "some secret key";
 
 const store = new MongoStore({
   collection: "sessions",
@@ -25,13 +28,15 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(
   session({
-    secret: "some secret string",
+    secret: SECRET_KEY,
     resave: false,
     saveUninitialized: false,
     store
   })
 );
 
+app.use(csrf());
+app.use(flash());
 app.use(require("./middleware/variables"));
 app.use(require("./middleware/user"));
 

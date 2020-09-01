@@ -16,13 +16,14 @@ block content
               td=course.title
               td=course.count
               td
-                button.btn.btn-small.js-remove(data-id=course.id) Delete
+                button.btn.btn-small.js-remove(data-csrf=csrf data-id=course.id) Delete
         
       p
         strong Price: 
         span.price=price
         
       form(action='/orders' method='POST')
+        input(type='hidden' name='_csrf' value=csrf)
         button.btn(type='submit') Buy
     else
       p Cart is Empty

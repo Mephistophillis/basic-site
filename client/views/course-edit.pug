@@ -19,10 +19,13 @@ block content
       label(for='img') Course image
       span(class='helper-text' data-error='Add image URL')
         
+    input(type='hidden' name='_csrf' value=csrf)
+      
     input(type='hidden' name='id' value=course.id)
       
     button.btn.btn-primary Edit
   
   form(action='/courses/remove' method='POST')
     input(type='hidden' name='id' value=course.id)
+    input(type='hidden' name='_csrf' value=csrf)
     button.btn.red() Delete

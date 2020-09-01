@@ -18,17 +18,20 @@ const computePrice = courses => {
 };
 
 router.get("/", auth, async (req, res) => {
-  const user = await req.user.populate("cart.items.courseId").execPopulate();
-  console.log(user);
+  try {
+    const user = await req.user.populate("cart.items.courseId").execPopulate();
 
-  const courses = mapCartItems(user.cart);
+    const courses = mapCartItems(user.cart);
 
-  res.render("cart", {
-    title: "Cart",
-    isCart: true,
-    courses: courses,
-    price: computePrice(courses)
-  });
+    res.render("cart", {
+      title: "Cart",
+      isCart: true,
+      courses: courses,
+      price: computePrice(courses)
+    });
+  } catch (err) {
+    console.log(err);
+  }
 });
 
 router.post("/add", auth, async (req, res) => {

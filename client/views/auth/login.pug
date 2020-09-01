@@ -10,6 +10,8 @@ block content
           li.tab.col.s6 
             a(href='#register') Sign Up
       #login.col.s6.offset-s3 
+        if loginError.length
+          p.alert=loginError
         h1 Log In
         form(action='/auth/login' method='POST')
           
@@ -22,10 +24,17 @@ block content
             input#password.validate(placeholder='password' name='password' type='password' required)
             label(for='password') Password
             span(class='helper-text' data-error='Type password')
+              
+          input(type='hidden' name='_csrf' value=csrf)
+          
+          p
+            a(href='/auth/reset') Forgot password
             
           button.btn.btn-primary(type='submit') Log In
           
       #register.col.s6.offset-s3
+        if registerError.length
+          p.alert=registerError
         h1 Sign Up
         form(action='/auth/register' method='POST')
           
@@ -48,6 +57,8 @@ block content
             input#confirm.validate(placeholder='password' name='confirm' type='password' required)
             label(for='confirm') Confirm
             span(class='helper-text' data-error='Type password')
+            
+          input(type='hidden' name='_csrf' value=csrf)
             
           button.btn.btn-primary(type='submit') Sign Up
     

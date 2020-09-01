@@ -1,0 +1,19 @@
+extends ../layout
+
+block content
+  .row
+    .col.s6.offset-s3 
+      if error.length
+        p.alert=error
+      h1 Reset password
+      form(action='/auth/reset' method='POST')
+        
+        .input-field
+          input#email.validate(placeholder='Email' name='email' type='text' required)
+          label(for='email') Email
+          span(class='helper-text' data-error='Type email')
+            
+        input(type='hidden' name='_csrf' value=csrf)
+          
+        button.btn.btn-primary(type='submit') Reset
+        

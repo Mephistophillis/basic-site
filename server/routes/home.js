@@ -2,7 +2,7 @@ const { Router } = require("express");
 
 const router = Router();
 
-router.get("/", (req, res) => {
+router.get("/", async (req, res) => {
   res.render("home", {
     title: "Home page",
     isHome: true

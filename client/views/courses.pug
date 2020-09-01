@@ -17,6 +17,7 @@ block content
               a(href='/courses/' + course.id + '/edit?allow=true') Edit
               form(action='/cart/add' method='POST')
                 input(type='hidden' name='id' value=course.id)
+                input(type='hidden' name='_csrf' value=csrf)  
                 button.btn.btn-primary(type='submit') Add 
   else 
     p No courses found.
