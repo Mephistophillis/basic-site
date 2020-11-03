@@ -2,7 +2,8 @@ const { Router } = require('express')
 const bcrypt = require('bcryptjs')
 const User = require('../models/user')
 const router = Router()
-
+const { validationResult } = require('express-validator')
+const { loginValidators, registerValidators } = require('../utils/validators')
 const nodemailer = require('nodemailer')
 const smtpTransport = require('nodemailer-smtp-transport')
 
@@ -27,58 +28,53 @@ router.get('/logout', async (req, res) => {
   })
 })
 
-router.post('/login', async (req, res) => {
+router.post('/login', loginValidators, async (req, res) => {
   try {
-    const { email, password } = req.body
+    const { email } = req.body
 
-    const candidate = await User.findOne({ email })
-
-    if (candidate) {
-      const areSame = await bcrypt.compare(password, candidate.password)
-
-      if (areSame) {
-        req.session.user = candidate
-        req.session.isAuthentificated = true
-
-        req.session.save(err => {
-          if (err) throw err
-          res.redirect('/')
-        })
-      } else {
-        req.flash('loginError', 'Pasword is wrong')
-        res.redirect('/auth/login#login')
-      }
-    } else {
-      req.flash('loginError', 'User not found')
-      res.redirect('/auth/login#login')
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+      req.flash('loginError', errors.array()[0].msg)
+      return res.status(422).redirect('/auth/login#login')
     }
+
+    const user = await User.findOne({ email })
+
+    req.session.user = user
+    req.session.isAuthentificated = true
+
+    req.session.save(err => {
+      if (err) throw err
+      res.redirect('/')
+    })
+
   } catch (err) {
     console.log(err)
   }
 })
 
-router.post('/register', async (req, res) => {
+router.post('/register', registerValidators, async (req, res) => {
   try {
-    const { email, name, password, confirm } = req.body
-    const candidate = await User.findOne({ email })
+    const { email, name, password } = req.body
 
-    if (candidate) {
-      req.flash('registerError', 'This email is exist')
-      res.redirect('/auth/login#register')
-    } else {
-      const hasPassword = await bcrypt.hash(password, 10)
-      const user = new User({
-        email,
-        name,
-        password: hasPassword,
-        cart: { items: [] },
-      })
-      await user.save()
-
-      res.redirect('/auth/login#login')
-
-      await transporter.sendMail(regEmail(email))
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+      req.flash('registerError', errors.array()[0].msg)
+      return res.status(422).redirect('/auth/login#register')
     }
+
+    const hasPassword = await bcrypt.hash(password, 10)
+    const user = new User({
+      email,
+      name,
+      password: hasPassword,
+      cart: { items: [] },
+    })
+    await user.save()
+
+    res.redirect('/auth/login#login')
+
+    await transporter.sendMail(regEmail(email))
   } catch (err) {
     console.log(err)
   }

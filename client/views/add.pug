@@ -2,20 +2,23 @@ extends layout
 
 block content
   h1= title
+  if (error)
+    p.alert=error
+
   form(action='/add' method='POST')
     
     .input-field
-      input#title.validate(placeholder='Title' name='title' type='text' required)
+      input#title.validate(placeholder='Title' name='title' type='text' value=data.title required)
       label(for='title') Title
       span(class='helper-text' data-error='Type title')
     
     .input-field
-      input#price.validate(placeholder='Price' name='price' type='number' min='1' required)
+      input#price.validate(placeholder='Price' name='price' type='number' min='1' value=data.price required)
       label(for='price') Course price
       span(class='helper-text' data-error='Type price')
     
     .input-field
-      input#img.validate(placeholder='Image' name='img' type='text' required)
+      input#img.validate(placeholder='Image' name='img' type='text' value=data.img required)
       label(for='img') Course image
       span(class='helper-text' data-error='Add image URL')
       

@@ -16,7 +16,7 @@ block content
         form(action='/auth/login' method='POST')
           
           .input-field
-            input#email.validate(placeholder='Email' name='email' type='text' required)
+            input#email.validate(placeholder='Email' name='email' type='email' required)
             label(for='email') Email
             span(class='helper-text' data-error='Type email')
           
@@ -39,7 +39,7 @@ block content
         form(action='/auth/register' method='POST')
           
           .input-field
-            input#r-name.validate(placeholder='Name' name='name' type='text' required)
+            input#r-name.validate(placeholder='Name' name='name' type='name' required)
             label(for='r-name') Name
             span(class='helper-text' data-error='Type your name')
           

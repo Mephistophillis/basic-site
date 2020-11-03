@@ -8,6 +8,8 @@ const flash = require("connect-flash");
 const session = require("express-session");
 const MongoStore = require("connect-mongodb-session")(session);
 
+const errorHandler = require('./middleware/error')
+
 const app = express();
 
 const PORT = process.env.PORT || 3000;
@@ -46,6 +48,8 @@ app.use("/add", require("./routes/add"));
 app.use("/cart", require("./routes/cart"));
 app.use("/orders", require("./routes/orders"));
 app.use("/auth", require("./routes/auth"));
+
+app.use(errorHandler)
 
 const start = async () => {
   try {
