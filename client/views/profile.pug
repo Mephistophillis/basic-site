@@ -1,0 +1,31 @@
+extends layout
+
+block content
+  h1 Профиль
+  .row
+    .col.s6
+      if user.avatarUrl
+        img.avatar(src='/' + user.avatarUrl alt="avatar-" + user.name)
+      else
+        p Аватара нет
+    .col.s6
+      form(action="/profile" method="POST" enctype="multipart/form-data")
+        p Ваш email: 
+          strong=user.email
+          
+        .input-field
+          input#name.validate(placeholder='Name' name='name' type='text' value=user.name required)
+          label(for='name') Ваше имя
+          span(class='helper-text' data-error='Имя не может быть пустым')
+        
+        .file-field.input-field
+          .btn
+            span Аватар
+            input(type="file" name="avatar")
+          .file-path-wrapper
+            input.file-path.validate(type="text")
+              
+        
+        input(type='hidden' name='_csrf' value=csrf)
+        
+        button.btn(type="submit") Изменить
